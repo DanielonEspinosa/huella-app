@@ -19,7 +19,12 @@ class DataBase {
   }
 
   async getConnection() {
-    await this.connection.connect();
+    try {
+      await this.connection.connect(); 
+    } catch (error) {
+      console.log('Erro de conexion con la base de datos => ', error);
+      return null;
+    }
     return this.connection;
   }
 
