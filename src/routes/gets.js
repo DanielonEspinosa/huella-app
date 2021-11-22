@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
 
 router.get('/Users', async (req, res) => {
   const conn = await database.getConnection();
-  res.json({status: 'Error', code: 200, message: "Error de conexion de la base de datos"});
+  if (!conn) res.json({status: 'Error', code: 200, message: "Error de conexion de la base de datos"});
   const queries = new Queries({connection: conn});
   const users = await queries.getAllUsers();
   database.CloseConnection();
