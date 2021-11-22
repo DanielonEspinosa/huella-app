@@ -22,6 +22,10 @@ class DataBase {
     await this.connection.connect();
     return this.connection;
   }
+
+  async CloseConnection() {
+    await this.connection.end();
+  }
 }
 
 module.exports = DataBase;
