@@ -18,15 +18,18 @@ class DataBase {
     });          
   }
 
-  async getConnection() {
+  async Connect() {
     try {
       await this.connection.connect(); 
     } catch (error) {
-      console.log('Erro de conexion con la base de datos => ', error);
-      return null;
+      console.log('An error ocurred trying to connect to the database => ', error);
     }
+  }
+
+  getConnection() {
     return this.connection;
   }
+
 
   async CloseConnection() {
     await this.connection.end();
