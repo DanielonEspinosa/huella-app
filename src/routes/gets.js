@@ -1,21 +1,22 @@
 const express = require('express');
-const DataBase = require('../database/Database');
-const Queries = require('../database/Queries');
+const getAllUsers = require('../applicationBusiness/gets/getAllUsers');
 
-const database = new DataBase();
-database.setUpConnection();
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.json({status: 'OK', code: 200, message: "todo good"});
+  return res.json({status: 'OK', code: 200, message: "todo good"});
 });
 
 router.get('/Users', async (req, res) => {
-  const conn = await database.getConnection();
-  if (!conn) res.json({status: 'Error', code: 200, message: "Error de conexion de la base de datos"});
-  const queries = new Queries({connection: conn});
-  const users = await queries.getAllUsers();
-  res.json({status: 'OK', code: 200, message: "todo good", body: users});
+  let users;
+  req.getConnection(async (error, connection) => {
+    if (error) {
+      console.log('Error in /Users => ', error);
+      return res.json({ok: 'false', users});
+    }
+    users = await getAllUsers({connection});
+    return res.json({ok: 'true', users});
+  });
 });
 
 module.exports = router;

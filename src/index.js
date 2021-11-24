@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const {testLog} = require('./middlewares');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const connection = require('./database/myConnection');
 
 main();
 
@@ -15,6 +16,7 @@ async function main() {
   app.use(morgan('dev'));
   app.use(bodyParser.json());
   app.use(cors());
+  app.use(connection);
   require("./routes/index")(app);
   
   app.listen(app.get('port'), (req, res) => {

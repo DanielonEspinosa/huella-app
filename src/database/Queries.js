@@ -9,7 +9,6 @@ class Queries {
 
   async getAllUsers() { 
     const res = await this.query('select * from Users');
-    console.log('res ====== ', res);
     return res;
   }
 
